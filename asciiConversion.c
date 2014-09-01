@@ -44,9 +44,37 @@ int asciiHexToInt(char *s)
     }
     return num;
 }
+double asciiToDouble(char *s)
+{
+    double num = 0;
+    int i = 0, pointFound = 0, value = 0;
+    int length = stringLength(s);
+    double decimalPosicion = 10;
+
+    for(i = 0; i < length; i++){
+        if (!pointFound){
+            if(s[i] == '.') {
+                pointFound = 1;
+                continue;
+            }
+            value = s[i] - '0';
+            printf("num = %f, s[i] = %c, value = %d\n", num, s[i], value);
+            num = 10 * num + value;
+        }else{
+            if(s[i] == '.') {
+                return num;
+            }
+            value = s[i] - '0';
+            num += value*1.0 / decimalPosicion;
+            decimalPosicion *= 10;
+        }
+    }
+
+    return num;
+}
 void main()
 {
-    char binary[32], hex[8], strDouble[50];
+    char binary[32], hex[8], strDouble[32];
 /*
     printf("Introduce un string binario:\n");
     scanf("%s", binary);
@@ -56,5 +84,10 @@ void main()
     printf("Introduce un string hex:\n");
     scanf("%s", hex);
     printf("Este es el equivalente en decimal del hexadecimal %s: %d\n", hex, asciiHexToInt(hex));
+*/
+/*
+    printf("Introduce un string double:\n");
+    scanf("%s", strDouble);
+    printf("Este es el equivalente en decimal del double %s: %f\n", strDouble, asciiToDouble(strDouble));
 */
 }
