@@ -6,9 +6,9 @@ char *leerUnStringArbitrariamenteLargo();
 
 void main()
 {
-    char string [100];
+    char *string;
     printf("Dame tu nombre: ");
-    scanf("%s",  &string[0]);
+    string = leerUnStringArbitrariamenteLargo();
     printf(" ... nombre: %s\n", string);
 }
 
