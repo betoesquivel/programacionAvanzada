@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+#include "lecturaArbitraria.h"
+
 int stringLength(const char *s)
 {
     int len = 0;
@@ -89,12 +91,12 @@ void main()
     scanf("%s", binary);
     printf("Este es el equivalente en decimal del binario %s: %d\n", binary, asciiBinaryToInt(binary));
 */
-/*
     printf("Introduce un string hex:\n");
-    scanf("%s", hex);
-    printf("Este es el equivalente en decimal del hexadecimal %s: %d\n", hex, asciiHexToInt(hex));
-*/
+    char *hexString = leerUnStringArbitrariamenteLargo();
+    printf("Este es el equivalente en decimal del hexadecimal %s: %d\n", hexString, asciiHexToInt(hexString));
+/*
     printf("Introduce un string double:\n");
     scanf("%s", strDouble);
     printf("Este es el equivalente en decimal del double %s: %f\n", strDouble, asciiToDouble(strDouble));
+*/
 }
