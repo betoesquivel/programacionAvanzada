@@ -48,18 +48,27 @@ double asciiToDouble(char *s)
 {
     double num = 0;
     int i = 0, pointFound = 0, value = 0;
-    int length = stringLength(s);
     double decimalPosicion = 10;
+    int signo = 1;
+    if (*s == '-')
+    {
+        signo = -1;
+        s++;
+    }else if (*s == '+'){
+        signo = +1;
+        s++;
+    }
+    int length = stringLength(s);
 
     for(i = 0; i < length; i++){
         if (!pointFound){
             if(s[i] == '.') {
                 pointFound = 1;
-                continue;
+            }else {
+                value = s[i] - '0';
+                //printf("num = %f, s[i] = %c, value = %d\n", num, s[i], value);
+                num = 10 * num + value;
             }
-            value = s[i] - '0';
-            printf("num = %f, s[i] = %c, value = %d\n", num, s[i], value);
-            num = 10 * num + value;
         }else{
             if(s[i] == '.') {
                 return num;
@@ -70,7 +79,7 @@ double asciiToDouble(char *s)
         }
     }
 
-    return num;
+    return num * signo;
 }
 void main()
 {
@@ -85,9 +94,7 @@ void main()
     scanf("%s", hex);
     printf("Este es el equivalente en decimal del hexadecimal %s: %d\n", hex, asciiHexToInt(hex));
 */
-/*
     printf("Introduce un string double:\n");
     scanf("%s", strDouble);
     printf("Este es el equivalente en decimal del double %s: %f\n", strDouble, asciiToDouble(strDouble));
-*/
 }
