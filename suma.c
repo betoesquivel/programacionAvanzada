@@ -101,7 +101,6 @@ void main()
     printf("Cuando quiera terminar, introduzca el $.\n");
     printf("Introduzca el primer numero a sumar:\n");
     while (*(strDouble = leerUnStringArbitrariamenteLargo()) != '$'){
-        printf("Esto introdujo %d", *strDouble);
         x = asciiToDouble(strDouble);
         suma += x;
         printf("La suma hasta ahora es: %f\n", suma);

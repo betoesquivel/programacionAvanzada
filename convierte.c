@@ -39,7 +39,8 @@ int asciiHexToInt(char *s)
         }else if ( s[i] >= '0' && s[i] <= '9'){
             val = s[i] - '0';
         }else{
-            return num;
+            printf ("Caracter inválido.\n");
+            return -1;
         }
         num += val*pow;
         pow *= 16;
@@ -85,19 +86,15 @@ double asciiToDouble(char *s)
 }
 void main()
 {
-    char binary[32], hex[8], strDouble[32];
     char *hexString;
-/*
-    printf("Introduce un string binario:\n");
-    scanf("%s", binary);
-    printf("Este es el equivalente en decimal del binario %s: %d\n", binary, asciiBinaryToInt(binary));
-*/
-    printf("Introduce un string hex:\n");
-    hexString = leerUnStringArbitrariamenteLargo();
-    printf("Este es el equivalente en decimal del hexadecimal %s: %d\n", hexString, asciiHexToInt(hexString));
-/*
-    printf("Introduce un string double:\n");
-    scanf("%s", strDouble);
-    printf("Este es el equivalente en decimal del double %s: %f\n", strDouble, asciiToDouble(strDouble));
-*/
+    int x;
+
+    printf("Cuando quiera terminar, introduzca el $.\n");
+    printf("Introduzca el primer numero a convertir:\n");
+    while (*(hexString = leerUnStringArbitrariamenteLargo()) != '$'){
+        x = asciiHexToInt(hexString);
+        if (x != -1)
+            printf("Este es el equivalente en decimal del hexadecimal %s: %d\n", hexString, x);
+        printf("Introduzca otro numero a convertir:\n");
+    }
 }
