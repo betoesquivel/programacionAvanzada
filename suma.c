@@ -67,15 +67,26 @@ double asciiToDouble(char *s)
             if(s[i] == '.') {
                 pointFound = 1;
             }else {
-                value = s[i] - '0';
+                if (s[i] >= '0' && s[i] <= '9') {
+                    value = s[i] - '0';
+                } else {
+                    printf("Caractér no válido.\n");
+                    return 0;
+                }
                 //printf("num = %f, s[i] = %c, value = %d\n", num, s[i], value);
                 num = 10 * num + value;
             }
         }else{
             if(s[i] == '.') {
-                return num;
+                printf("Caractér no válido.\n");
+                return 0;
             }
-            value = s[i] - '0';
+            if (s[i] >= '0' && s[i] <= '9') {
+                value = s[i] - '0';
+            } else {
+                printf("Caractér no válido.\n");
+                return 0;
+            }
             num += value*1.0 / decimalPosicion;
             decimalPosicion *= 10;
         }
@@ -85,19 +96,16 @@ double asciiToDouble(char *s)
 }
 void main()
 {
-    char binary[32], hex[8], strDouble[32];
-    char *hexString;
-/*
-    printf("Introduce un string binario:\n");
-    scanf("%s", binary);
-    printf("Este es el equivalente en decimal del binario %s: %d\n", binary, asciiBinaryToInt(binary));
-*/
-    printf("Introduce un string hex:\n");
-    hexString = leerUnStringArbitrariamenteLargo();
-    printf("Este es el equivalente en decimal del hexadecimal %s: %d\n", hexString, asciiHexToInt(hexString));
-/*
-    printf("Introduce un string double:\n");
-    scanf("%s", strDouble);
-    printf("Este es el equivalente en decimal del double %s: %f\n", strDouble, asciiToDouble(strDouble));
-*/
+    char *strDouble;
+    double suma = 0, x;
+    printf("Cuando quiera terminar, introduzca el $.\n");
+    printf("Introduzca el primer numero a sumar:\n");
+    while (*(strDouble = leerUnStringArbitrariamenteLargo()) != '$'){
+        printf("Esto introdujo %d", *strDouble);
+        x = asciiToDouble(strDouble);
+        suma += x;
+        printf("La suma hasta ahora es: %f\n", suma);
+        printf("Introduzca otro numero a sumar:\n");
+    }
+    printf("La suma fue %f\n", suma);
 }
