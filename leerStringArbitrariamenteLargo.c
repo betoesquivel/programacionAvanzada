@@ -23,26 +23,38 @@ char *leerUnStringArbitrariamenteLargo()
     *s='\0';
 
     //getch() está en conio.h, pero no hace nada en pantalla.
-    c = getch(); printf("%c", c);
+    c = getch();
+    if (c == 127 || c == 8) {
+        printf("\b \b");
+    }
+    else {
+        printf("%c", c);
+    }
     while(c!=10){//13 es el codigo ascii del Enter
-        s[contador++] = c;
-        if (contador >= contadorMax)
-        {
-            // pedir mas memoria porque el null no va a caber
-            sAux = (char *) malloc((contadorMax + 5) * sizeof(char));
-            for (i = 0; i<contadorMax; i++){
-                sAux[i] = s[i];
+        if (c == 127 || c == 8) {
+            s[--contador] = '\0';
+        }else {
+            s[contador++] = c;
+            if (contador >= contadorMax)
+            {
+                // pedir mas memoria porque el null no va a caber
+                sAux = (char *) malloc((contadorMax + 5) * sizeof(char));
+                for (i = 0; i<contadorMax; i++){
+                    sAux[i] = s[i];
+                }
+                free (s);
+                s = sAux;
+                contadorMax+=5;
             }
-            free (s);
-            s = sAux;
-            contadorMax+=5;
+            s[contador] = '\0';
         }
-        s[contador] = '\0';
         c = getch();
-        if (c == 127 || c == 8)
-            printf("\b");
-        else
+        if (c == 127 || c == 8) {
+            printf("\b \b");
+        }
+        else {
             printf("%c", c);
+        }
     }
 
     //c = getch(); printf("%c", 10); // para que se coma el salto de linea
