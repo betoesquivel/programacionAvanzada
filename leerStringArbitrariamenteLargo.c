@@ -3,8 +3,7 @@
 #include "conio.h"
 
 char *leerUnStringArbitrariamenteLargo();
-
-/*
+//#if 0
 void main()
 {
     char *string;
@@ -12,7 +11,7 @@ void main()
     string = leerUnStringArbitrariamenteLargo();
     printf(" ... nombre: %s\n", string);
 }
-*/
+//#endif
 
 char *leerUnStringArbitrariamenteLargo()
 {
@@ -39,7 +38,11 @@ char *leerUnStringArbitrariamenteLargo()
             contadorMax+=5;
         }
         s[contador] = '\0';
-        c = getch(); printf("%c", c);
+        c = getch();
+        if (c == 127 || c == 8)
+            printf("\b");
+        else
+            printf("%c", c);
     }
 
     //c = getch(); printf("%c", 10); // para que se coma el salto de linea
