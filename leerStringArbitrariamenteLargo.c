@@ -42,7 +42,15 @@ char *leerUnStringArbitrariamenteLargo()
     }
     while(c!=10){//13 es el codigo ascii del Enter
         if (c == 127 || c == 8) {
-            s[--contador] = '\0';
+            if (contador > 0) {
+                s[--contador] = '\0';
+                if(contadorMax - contador > 5){
+                    contadorMax -= 5;
+                    sAux = cambiarEspacioDeString(s, contadorMax, 0);
+                    printf ("Contador: %d   ContadorMax: %d", contador, contadorMax);
+                }
+                s = sAux;
+            }
         }else {
             s[contador++] = c;
             if (contador >= contadorMax)
