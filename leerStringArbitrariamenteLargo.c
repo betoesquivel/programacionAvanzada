@@ -13,12 +13,13 @@ void main()
 }
 //#endif
 //
-char *cambiarEspacioDeString(const char *s, int contadorMax, int cambioEnEspacio){
+char *cambiarEspacioDeString(char *s, int contadorMax, int cambioEnEspacio){
     char *sAux; int i;
     sAux = (char *) malloc((contadorMax + cambioEnEspacio) * sizeof(char));
     for (i = 0; i<contadorMax; i++){
         sAux[i] = s[i];
     }
+    free (s);
     return sAux;
 }
 
@@ -48,7 +49,6 @@ char *leerUnStringArbitrariamenteLargo()
             {
                 // pedir mas memoria porque el null no va a caber
                 sAux = cambiarEspacioDeString(s, contadorMax, 5);
-                free (s);
                 s = sAux;
                 contadorMax+=5;
             }
