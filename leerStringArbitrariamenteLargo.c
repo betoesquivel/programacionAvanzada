@@ -3,7 +3,7 @@
 #include "conio.h"
 
 char *leerUnStringArbitrariamenteLargo();
-//#if 0
+#if 0
 void main()
 {
     char *string;
@@ -11,7 +11,7 @@ void main()
     string = leerUnStringArbitrariamenteLargo();
     printf(" ... nombre: %s\n", string);
 }
-//#endif
+#endif
 
 char *leerUnStringArbitrariamenteLargo()
 {
