@@ -2,17 +2,6 @@
 #include <stdlib.h>
 #include "conio.h"
 
-char *leerUnStringArbitrariamenteLargo();
-//#if 0
-void main()
-{
-    char *string;
-    printf("Dame tu nombre: ");
-    string = leerUnStringArbitrariamenteLargo();
-    printf(" ... nombre: %s\n", string);
-}
-//#endif
-//
 char *cambiarEspacioDeString(char *s, int contadorMax, int cambioEnEspacio){
     char *sAux; int i;
     sAux = (char *) malloc((contadorMax + cambioEnEspacio) * sizeof(char));
@@ -46,8 +35,9 @@ char *leerUnStringArbitrariamenteLargo()
                 s[--contador] = '\0';
                 if(contadorMax - contador > 5){
                     contadorMax -= 5;
-                    s = cambiarEspacioDeString(s, contadorMax, 0);
+                    sAux = cambiarEspacioDeString(s, contadorMax, 0);
                 }
+                s = sAux;
             }
         }else {
             s[contador++] = c;
@@ -73,3 +63,4 @@ char *leerUnStringArbitrariamenteLargo()
 
     return s;
 }
+
