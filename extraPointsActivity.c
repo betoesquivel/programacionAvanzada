@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include "conio.h"
 #include "readingArbitrarilyLongString.h"
 
 //I need the file conio.h which allows me to use getch on linux
@@ -44,6 +43,7 @@ int main()
         printf("Dame matricula: ");
         scanf("%d",&num);
         if (num>0) {
+            getch();// removes \n from last scan...
             printf("Dame nombre: ");
             nom = leerUnStringArbitrariamenteLargo();
             printf("Dame apellido: ");
@@ -63,6 +63,8 @@ int main()
             }
         }
     } while(num!=0);
+
+    imprimirAlumnos(alumnos, numAlumnos);
 
     return 0;
 }
