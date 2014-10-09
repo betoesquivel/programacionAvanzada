@@ -17,11 +17,51 @@ clock_t start, end;
 
 void ordenarListaIncrementalmentePorMatricula()
 {
-    struct _persona *nuevaLista = NULL;
     struct _persona *nodoMayor;
     struct _persona *nodoAnteriorAlMayor;
+    struct _persona *nodoComparacion;
+    struct _persona *nodoAnteriorNodoComparacion;
+    struct _persona *nuevaLista = NULL;
 
+    nodoMayor = lista;
+    nodoAnteriorAlMayor = NULL;
+    nodoComparacion = nodoMayor->siguiente;
+    nodoAnteriorNodoComparacion = nodoMayor;
     while(lista){
+
+        while(nodoComparacion)
+        {
+            if(nodoMayor->matricula < nodoComparacion->matricula)
+            {
+                nodoMayor = nodoComparacion;
+                nodoAnteriorAlMayor = nodoAnteriorNodoComparacion;
+            }
+            nodoAnteriorNodoComparacion = nodoComparacion;
+            nodoComparacion = nodoComparacion->siguiente;
+        }
+        if (!nuevaLista)
+        {
+            if (nodoAnteriorAlMayor)
+            {
+                nodoAnteriorAlMayor->siguiente = nodoMayor->siguiente;//saco el nodomayor de la lista.
+            }else{
+                lista = nodoMayor->siguiente;
+            }
+            nuevaLista = nodoMayor;
+            nodoMayor->siguiente = NULL;
+        }else
+        {
+            if (nodoAnteriorAlMayor)
+            {
+                nodoAnteriorAlMayor->siguiente = nodoMayor->siguiente;//saco el nodomayor de la lista.
+            }else{
+                lista = nodoMayor->siguiente;
+            }
+            nodoMayor->siguiente = nuevaLista;
+            nuevaLista = nodoMayor;
+
+            //falta completar... lo subió a blackboard...
+        }
 
     }
 
