@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+
 #include "readingArbitrarilyLongString.h"
 
 //I need the file conio.h which allows me to use getch on linux
@@ -29,6 +31,33 @@ void imprimirAlumnos(struct _persona *alumnos, int numAlumnos)
                 alumnos[cont].nombre, alumnos[cont].apellido);
         cont++;
     }
+}
+void guardarAlumnosBinario(struct _persona *alumnos, int numAlumnos)
+{
+    // se guardan alumnos
+    // se guarda el tam del struct en la primera linea.
+    int cont = 0;
+    FILE *fp;
+    fp=fopen("alumnos.txt", "a");
+    fwrite(&numAlumnos, sizeof(int), 1, fp);
+    fwrite(alumnos, sizeof(struct _persona), numAlumnos, fp);
+    fclose(fp);
+}
+int leerAlumnosBinario(struct _persona *alumnos)
+{
+    // se guardan alumnos
+    // se guarda el tam del struct en la primera linea.
+    int cont = 0;
+    FILE *fp;
+    int *numAlumnos = malloc(sizeof(int));
+    fp=fopen("alumnos.txt", "r");
+    fread(numAlumnos, sizeof(int), 1, fp);
+    if (*numAlumnos){
+        alumnos = malloc(sizeof(struct _persona) * *numAlumnos);
+        fread(alumnos, sizeof(struct _persona), *numAlumnos, fp);
+    }
+    fclose(fp);
+    return *numAlumnos;
 }
 
 int main()
@@ -64,6 +93,13 @@ int main()
         }
     } while(num!=0);
 
+    imprimirAlumnos(alumnos, numAlumnos);
+    printf("Guardo en el archivo...\n");
+    guardarAlumnosBinario(alumnos, numAlumnos);
+
+    free(alumnos);
+    printf("Leo del archivo...\n");
+    numAlumnos = leerAlumnosBinario(alumnos);
     imprimirAlumnos(alumnos, numAlumnos);
 
     return 0;
