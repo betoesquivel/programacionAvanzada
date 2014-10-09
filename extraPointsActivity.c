@@ -22,6 +22,17 @@ struct _persona *cambiarEspacioEstructura(struct _persona *alumnos, int contador
     return alumnosAux;
 }
 
+void guardarAlumnosBinario(struct _persona *alumnos, int numAlumnos)
+{
+    // se guardan alumnos
+    // se guarda el tam del struct en la primera linea.
+    int cont = 0;
+    FILE *fp;
+    fp=fopen("alumnos.txt", "w");
+    fwrite(&numAlumnos, sizeof(int), 1, fp);
+    fwrite(alumnos, sizeof(struct _persona), numAlumnos, fp);
+    fclose(fp);
+}
 void imprimirAlumnos(struct _persona *alumnos, int numAlumnos)
 {
     int cont = 0;
@@ -32,17 +43,6 @@ void imprimirAlumnos(struct _persona *alumnos, int numAlumnos)
         cont++;
     }
 }
-void guardarAlumnosBinario(struct _persona *alumnos, int numAlumnos)
-{
-    // se guardan alumnos
-    // se guarda el tam del struct en la primera linea.
-    int cont = 0;
-    FILE *fp;
-    fp=fopen("alumnos.txt", "a");
-    fwrite(&numAlumnos, sizeof(int), 1, fp);
-    fwrite(alumnos, sizeof(struct _persona), numAlumnos, fp);
-    fclose(fp);
-}
 int leerAlumnosBinario(struct _persona *alumnos)
 {
     // se guardan alumnos
@@ -52,11 +52,21 @@ int leerAlumnosBinario(struct _persona *alumnos)
     int *numAlumnos = malloc(sizeof(int));
     fp=fopen("alumnos.txt", "r");
     fread(numAlumnos, sizeof(int), 1, fp);
+    printf("Se leyeron %d alumnos.\n", *numAlumnos);
     if (*numAlumnos){
         alumnos = malloc(sizeof(struct _persona) * *numAlumnos);
         fread(alumnos, sizeof(struct _persona), *numAlumnos, fp);
     }
     fclose(fp);
+
+    while (cont < *numAlumnos)
+    {
+        printf("Matricula: %d\nNombre: %s %s\n", alumnos[cont].matricula,
+                alumnos[cont].nombre, alumnos[cont].apellido);
+        cont++;
+    }
+    //ciclar y guardar length string length string
+
     return *numAlumnos;
 }
 
@@ -93,6 +103,7 @@ int main()
         }
     } while(num!=0);
 
+    printf("\nImprimo alumnos...\n");
     imprimirAlumnos(alumnos, numAlumnos);
     printf("Guardo en el archivo...\n");
     guardarAlumnosBinario(alumnos, numAlumnos);
@@ -100,7 +111,9 @@ int main()
     free(alumnos);
     printf("Leo del archivo...\n");
     numAlumnos = leerAlumnosBinario(alumnos);
-    imprimirAlumnos(alumnos, numAlumnos);
+
+//   printf("\nImprimo alumnos...\n");
+//   imprimirAlumnos(alumnos, numAlumnos);
 
     return 0;
 }
