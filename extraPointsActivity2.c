@@ -1,53 +1,41 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "readingArbitrarilyLongString.h"
-
-//I need the file conio.h which allows me to use getch on linux
-//I need readingArbitrarilyLongString.h to do precisely that
-
-struct _persona {
-    int matricula;
-    char *nombre;
-    char *apellido;
-};
-void imprimirAlumnos(struct _persona *alumnos, int numAlumnos)
+int main()
 {
-}
-int leerAlumnosBinario(struct _persona *alumnos)
-{
-    // se guardan alumnos
-    // se guarda el tam del struct en la primera linea.
+    int numAlumnos = 0; // valor con la cantidad de alumnos en la lista.
+
     FILE *fp;
-    int *numAlumnos = malloc(sizeof(int));
     fp=fopen("alumnos.txt", "r");
-    fread(numAlumnos, sizeof(int), 1, fp);
-    printf("Se leyeron %d alumnos.\n", *numAlumnos);
-    if (*numAlumnos){
-        alumnos = malloc(sizeof(struct _persona) * *numAlumnos);
-        fread(alumnos, sizeof(struct _persona), *numAlumnos, fp);
+
+    int num, lenN, lenAp;
+    char *nom, *ap;
+    fread(&numAlumnos, sizeof(int), 1, fp);
+    while(numAlumnos)
+    {
+        // leer matricula
+        fread(&num, sizeof(int), 1, fp);
+        printf("Matricula: %d\n", num);
+        // leer nombre
+        fread(&lenN, sizeof(int), 1, fp);
+        nom = malloc(sizeof(char) * lenN + 1);
+        fread(nom, sizeof(char), lenN, fp);
+        nom[lenN] = '\0';
+
+        printf("Nombre: %s\n", nom);
+        // leer apellido
+        fread(&lenAp, sizeof(int), 1, fp);
+        ap = malloc(sizeof(char) * lenAp + 1);
+        fread(ap, sizeof(char), lenAp, fp);
+        ap[lenAp] = '\0';
+        printf("Apellido: %s\n", ap);
+
+        numAlumnos--;
     }
     fclose(fp);
 
-    printf("\nImprimo alumnos...\n");
-    int cont = 0;
-    while (cont < *numAlumnos)
-    {
-        printf("Matricula: %d\nNombre: %s %s\n", alumnos[cont].matricula,
-                alumnos[cont].nombre, alumnos[cont].apellido);
-        cont++;
-    }
-
-    return *numAlumnos;
-}
-
-int main()
-{
-    int numAlumnos = 0;
-    struct _persona *alumnos;
-
-    printf("Leo del archivo...\n");
-    numAlumnos = leerAlumnosBinario(alumnos);
+//   printf("\nImprimo alumnos...\n");
+//   imprimirAlumnos(alumnos, numAlumnos);
 
     return 0;
 }

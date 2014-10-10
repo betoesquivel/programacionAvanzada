@@ -12,15 +12,6 @@ char *cambiarEspacioDeString(char *s, int contadorMax, int cambioEnEspacio){
     return sAux;
 }
 
-void echo(char c){
-    if (c == 127 || c == 8) {
-        printf("\b \b");
-    }
-    else {
-        printf("%c", c);
-    }
-}
-
 int protectedEcho(char c){
     if (c == 127 || c == 8) {
         printf("\b \b");
@@ -54,6 +45,16 @@ int floatEcho(char c, int hasDot, int signPossible){
     }
     return 1;
 }
+
+void echo(char c){
+    if (c == 127 || c == 8) {
+        printf("\b \b");
+    }
+    else {
+        printf("%c", c);
+    }
+}
+
 
 char *leerUnStringArbitrariamenteLargo()
 {
