@@ -80,6 +80,22 @@ struct _persona *cambiarEspacioEstructura(struct _persona *alumnos, int contador
     free (alumnos);
     return alumnosAux;
 }
+char *toUpper(const char *s)
+{
+    int length = strlen(s);
+    char *upper = malloc(length * sizeof(char) + 1);
+    int i;
+    for(i=0;s[i];i++){
+        if (s[i] >= 'a' && s[i] <= 'z') {
+            upper[i] = s[i] - ('a' - 'A');
+        }
+        else {
+            upper[i] = s[i];
+        }
+    }
+    upper[i] = '\0';
+    return upper;
+}
 
 void imprimirAlumnos(struct _persona *alumnos, int numAlumnos)
 {
@@ -91,7 +107,60 @@ void imprimirAlumnos(struct _persona *alumnos, int numAlumnos)
         cont++;
     }
 }
+void ordenarListaIncrementalmentePorMatricula(struct _persona **alumnos, int cont)
+{
+    int elMasPeque, elOtro;
+    struct _persona aux;
+    struct _persona *lista = *alumnos;
+    int contadorInterno;
 
+    elMasPeque = 0;
+    elOtro = 1;
+    while(cont -1){
+        contadorInterno = cont;
+        while(contadorInterno-1)
+        {
+            if (lista[elMasPeque].matricula>lista[elOtro].matricula)
+            {
+                memcpy(&aux,&lista[elMasPeque], sizeof(struct _persona));
+                memcpy(&lista[elMasPeque],&lista[elOtro], sizeof(struct _persona));
+                memcpy(&lista[elOtro],&aux, sizeof(struct _persona));
+            }
+            contadorInterno--;
+            elOtro++;
+        }
+        elMasPeque++;
+        elOtro=elMasPeque+1;
+        cont--;
+    }
+}
+void ordenarListaIncrementalmentePorApellido(struct _persona **alumnos, int cont)
+{
+    int elMasPeque, elOtro;
+    struct _persona aux;
+    struct _persona *lista = *alumnos;
+    int contadorInterno;
+
+    elMasPeque = 0;
+    elOtro = 1;
+    while(cont -1){
+        contadorInterno = cont;
+        while(contadorInterno-1)
+        {
+            if (strcmp(toUpper(lista[elMasPeque].apellido), toUpper(lista[elOtro].apellido)) > 0)
+            {
+                memcpy(&aux,&lista[elMasPeque], sizeof(struct _persona));
+                memcpy(&lista[elMasPeque],&lista[elOtro], sizeof(struct _persona));
+                memcpy(&lista[elOtro],&aux, sizeof(struct _persona));
+            }
+            contadorInterno--;
+            elOtro++;
+        }
+        elMasPeque++;
+        elOtro=elMasPeque+1;
+        cont--;
+    }
+}
 int main()
 {
     int maxAlumnos = 5; // valor para cambiar la dimension
@@ -124,5 +193,12 @@ int main()
     printf("\nImprimo alumnos...\n");
     imprimirAlumnos(alumnos, numAlumnos);
 
+    ordenarListaIncrementalmentePorMatricula(&alumnos, numAlumnos);
+    printf("\nImprimo alumnos ordenados por mat...\n");
+    imprimirAlumnos(alumnos, numAlumnos);
+
+    ordenarListaIncrementalmentePorApellido(&alumnos, numAlumnos);
+    printf("\nImprimo alumnos ordenados por apellido...\n");
+    imprimirAlumnos(alumnos, numAlumnos);
     return 0;
 }
