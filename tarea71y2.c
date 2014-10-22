@@ -28,7 +28,6 @@ char *getLine(FILE *archivo) {
     return(texto);
 }
 
-/*
 int main (int argc, char *argv[])
 {
     char *nomArch = argv[1];
@@ -82,7 +81,7 @@ int main (int argc, char *argv[])
         printf("Error al abrir el archivo\n");
     return 0;
 }
-*/
+
 
 int contarPalabras(char *s)
 {
@@ -108,7 +107,7 @@ int contarPalabras(char *s)
     }
     return palabras+1;
 }
-
+/*
 int main (int argc, char *argv[])
 {
     char *nomArchEnt = argv[1];
@@ -179,3 +178,4 @@ int main (int argc, char *argv[])
         printf("Error al abrir el archivo\n");
     return 0;
 }
+*/
