@@ -102,6 +102,8 @@ int contarPalabras(char *s)
         }
     }
     if(!pasadoNoDelimitador){
+        //terminaba con un espacio o un punto
+        //entonces conté una palabra de más.
         palabras--;
     }
     return palabras+1;
@@ -132,7 +134,6 @@ int main (int argc, char *argv[])
     else
         printf("Error al abrir el archivo\n");
 
-    printf("Estas son las oraciones\n");
     int i = 0;
     oraciones[i] = strtok(texto, "\n");
     while (oraciones[i]){
@@ -140,14 +141,33 @@ int main (int argc, char *argv[])
         oraciones[i] = strtok(NULL, "\n");
     }
 
+    int numOraciones = i;
+    int tams[1000];
     i = 0;
-    while (oraciones[i]){
-        printf("%s\nCon %d palabras.\n", oraciones[i], contarPalabras(oraciones[i]));
+    while (i < numOraciones){
+        tams[i] = contarPalabras(oraciones[i]);
         i++;
     }
 
     ptrArchivo = fopen(nomArchSal, "w");
     if (ptrArchivo != NULL) {
+        printf("Archivo abierto\n");
+        int cont = 0;
+        while (cont < numOraciones){
+            //este segmento de codigo me calcula al menor
+            i = 0;
+            int indexMenor = 0;
+            while (i < numOraciones){
+
+                if ( tams[indexMenor] == -1||( tams[i] > 0 && tams[i] < tams[indexMenor] ) ){
+                    indexMenor = i;
+                }
+                i++;
+            }
+            //imprimo el menor index
+            fprintf(ptrArchivo, "%s\n", oraciones[indexMenor]);
+            cont++; tams[indexMenor] = -1;
+        }
 
 
         if (fclose(ptrArchivo) == 0)
