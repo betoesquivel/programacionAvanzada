@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <memory.h>
+#include <string.h>
 
 FILE *ptrArchivo;
 
@@ -28,20 +28,78 @@ char *getLine(FILE *archivo) {
     return(texto);
 }
 
-int main (int argc, char *args[])
-{
-    char *nomArch = args[0];
-    char *palabra = args[1];
 
-    char *linea;
+int main (int argc, char *argv[])
+{
+    char *nomArch = argv[1];
+    char *palabra = argv[2];
+    int longitudPalabra = strlen(palabra);
+    int longitudTexto;
+
+    //dejo espacio para el \0 y para el espacio o salto de linea
+    char *palabraAux;
+    char *textoMod;
+
+    char *texto;
     ptrArchivo = fopen(nomArch, "r");
     if (ptrArchivo != NULL) {
         printf("Archivo abierto\n");
 
-        while (!feof(ptrArchivo)) {
-            linea = getLine(ptrArchivo);
-            printf ("%s %s", linea, palabra);
+        texto = getLine(ptrArchivo);
+        printf ("%s %s\n", texto, palabra);
+        textoMod = malloc ((strlen(texto) + 1) * sizeof(char));
+        palabraAux = malloc ((strlen(texto) + 1) * sizeof(char));
+        longitudTexto = strlen(texto);
+        textoMod[0] = '\0';
+
+        if (fclose(ptrArchivo) == 0)
+            printf("Archivo cerrado\n");
+        else
+            printf("Error al cerrar el archivo");
+    }
+    else
+        printf("Error al abrir el archivo\n");
+
+    ptrArchivo = fopen(nomArch, "a");
+    if (ptrArchivo != NULL) {
+        printf("Archivo abierto\n");
+
+        palabraAux = strtok (texto, " ,.-\n");
+        while (palabraAux)
+        {
+            if (strcmp(palabra, palabraAux)){
+                //no son iguales
+                strcat(textoMod, palabraAux);
+            }
+            free (palabraAux);
+            palabraAux = strtok (NULL, " ,.-");
         }
+        printf ("Esto llevo concat: %s \n", textoMod);
+        /*
+        for (i = 0; i < longitudTexto; i++)
+        {
+            j = 0;
+            while (texto[i] != ' ' && texto[i] != 10 && texto[i] != 13 && texto[i]){
+                palabraAux[j] = texto[i];
+                j++;
+                i++;
+            }
+            palabraAux[j] = '\0';
+
+            printf ("Esta es la palabra aux: %s \n", palabraAux);
+            printf ("Un string vacio: %d\n", (int)'\0');
+            //tengo una palabra en palabraAux asi que comparo
+            if (j != longitudPalabra || strcmp(palabra, palabraAux) ){
+                //no son iguales
+                //concateno la palabra al textoMod
+                // Falta agregar ' ' o '\n'
+                palabraAux[j] = texto[i];
+                palabraAux[++j] = '\0';
+                strcat(textoMod, palabraAux);
+            }
+        }
+        */
+        //printf("Texto MOD:\n %s", textoMod);
 
         if (fclose(ptrArchivo) == 0)
             printf("Archivo cerrado\n");
