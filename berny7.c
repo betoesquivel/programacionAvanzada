@@ -39,6 +39,7 @@ char *getLine(FILE *archivo) {
 
 
 // main problema 1
+/*
 int main(int argc, const char * argv[])
 {
     char *texto;
@@ -88,10 +89,10 @@ int main(int argc, const char * argv[])
 	else
 		printf("Error al abrir el archivo\n");
 }
-
+*/
 
 // main problema 2
-/*
+
 int main(int argc, const char * argv[])
 {
     char *texto;
@@ -125,6 +126,11 @@ int main(int argc, const char * argv[])
         oraciones[j] = strtok(NULL, "\n");
     }
 
+    i = 0;
+    while (oraciones[i]){
+        printf("%s\n", oraciones[i]);
+        i++;
+    }
     for (i = 0; i < j; i++) {
         contador = 0;
         for (x = 0; x < strlen(oraciones[i]); x++) {
@@ -169,4 +175,4 @@ int main(int argc, const char * argv[])
 	else
 		printf("Error al abrir el archivo\n");
 }
-*/
+
