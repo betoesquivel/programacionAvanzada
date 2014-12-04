@@ -62,10 +62,10 @@ struct _persona {
   char *apellido;
 };
 
-struct _persona *cambiarEspacioDeVector(struct _persona *p, int contadorMax, int cambioEnEspacio){
+struct _persona *cambiarEspacioDeVector(struct _persona *p, int tamanio, int cambioEnEspacio){
     struct _persona *pAux;
-    pAux = (struct _persona *) malloc((contadorMax + cambioEnEspacio) * sizeof(struct _persona));
-    memcpy(pAux, p, contadorMax * sizeof(struct _persona));
+    pAux = (struct _persona *) malloc((tamanio + cambioEnEspacio) * sizeof(struct _persona));
+    memcpy(pAux, p, tamanio * sizeof(struct _persona));
     free (p);
     return pAux;
 }
@@ -135,7 +135,6 @@ int main(){
   for (i = 0; i<tam; i++){
     fread(&dbP[i].matricula, sizeof(int), 1, fp);
 
-    printf("Voy a leer los strings...\n");
     fread(&sLength, sizeof(int), 1, fp);
     dbP[i].nombre = (char *)malloc(sizeof(char)*sLength + 1);
     fread(dbP[i].nombre, sizeof(char), sLength + 1, fp);
