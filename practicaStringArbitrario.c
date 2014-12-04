@@ -1,31 +1,31 @@
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "conio.h"
+#include <string.h>
 
-char *leerUnStringArbitrariamenteLargo();
-//#if 0
-int main()
-{
-    char *string;
-    printf("Dame tu nombre: ");
-    string = leerUnStringArbitrariamenteLargo();
-    printf(" ... nombre: %s\n", string);
-    return 0;
+// returns -1 when it didnt echo because it was a backspace
+void echo(char c){
+    if (c == 127 || c == 8) {
+        printf("\b \b");
+    } else {
+        printf("%c", c);
+    }
 }
-//#endif
-//
+
 char *cambiarEspacioDeString(char *s, int contadorMax, int cambioEnEspacio){
     char *sAux; int i;
     sAux = (char *) malloc((contadorMax + cambioEnEspacio) * sizeof(char));
+    memcpy(sAux, s, contadorMax * sizeof(char));
+    /*
     for (i = 0; i<contadorMax; i++){
         sAux[i] = s[i];
     }
+    */
     free (s);
     return sAux;
 }
 
-char *leerUnStringArbitrariamenteLargo()
-{
+char *leerUnStringArbitrariamenteLargo() {
 
     char *s = NULL, c, *sAux;
     int contador = 0, contadorMax = 5, i;
@@ -35,14 +35,9 @@ char *leerUnStringArbitrariamenteLargo()
 
     //getch() está en conio.h, pero no hace nada en pantalla.
     c = getch();
-    if (c == 127 || c == 8) {
-        printf("\b \b");
-    }
-    else {
-        printf("%c", c);
-    }
+    echo(c);
     while(c!=10){//13 es el codigo ascii del Enter
-        if (c == 127 || c == 8) {
+        if (c == 127 || c == 8) {// si el char era un backspace
             if (contador > 0) {
                 s[--contador] = '\0';
                 if(contadorMax - contador > 5){
@@ -55,22 +50,21 @@ char *leerUnStringArbitrariamenteLargo()
             if (contador >= contadorMax)
             {
                 // pedir mas memoria porque el null no va a caber
-                sAux = cambiarEspacioDeString(s, contadorMax, 5);
-                s = sAux;
+                s = cambiarEspacioDeString(s, contadorMax, 5);
                 contadorMax+=5;
             }
             s[contador] = '\0';
         }
         c = getch();
-        if (c == 127 || c == 8) {
-            printf("\b \b");
-        }
-        else {
-            printf("%c", c);
-        }
+        echo(c);
     }
 
-    //c = getch(); printf("%c", 10); // para que se coma el salto de linea
-
     return s;
+}
+
+int main(){
+  printf("Introduce tu nombre: ");
+  char *nom = leerUnStringArbitrariamenteLargo();
+  printf("Este es tu nombre: %s\n", nom);
+  return 0;
 }
