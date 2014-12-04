@@ -1,17 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "conio.h"
+#include <string.h>
 
-char *cambiarEspacioDeString(char *s, int contadorMax, int cambioEnEspacio){
+char *cambiarEspacioDeString(char *s, int tamanio, int cambioEnEspacio){
     char *sAux; int i;
-    sAux = (char *) malloc((contadorMax + cambioEnEspacio) * sizeof(char));
-    for (i = 0; i<contadorMax; i++){
-        sAux[i] = s[i];
-    }
+    sAux = (char *) malloc((tamanio + cambioEnEspacio) * sizeof(char));
+    memcpy(sAux, s, sizeof(char) * tamanio);
     free (s);
     return sAux;
 }
-
+#if 0
 int protectedEcho(char c){
     if (c == 127 || c == 8) {
         printf("\b \b");
@@ -45,7 +44,7 @@ int floatEcho(char c, int hasDot, int signPossible){
     }
     return 1;
 }
-
+#endif
 void echo(char c){
     if (c == 127 || c == 8) {
         printf("\b \b");
@@ -93,6 +92,7 @@ char *leerUnStringArbitrariamenteLargo()
     return s;
 }
 
+#if 0
 char *readPassword(int l)
 {
 
@@ -179,4 +179,4 @@ char *readFloatAsString()
 
     return s;
 }
-
+#endif
